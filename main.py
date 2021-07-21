@@ -21,4 +21,4 @@ for metric in fetch_metrics("localhost:16030"):
 
     if str(metric['metric']) == "hbase.jvmmetrics.MemHeapUsedM":
         print("METRIC:" + str(metric['metric']) + ": " + str(metric['value']))
-        statsd.gauge(metric['metric'], metric['value'],["{}:{}".format(k, v) for k, v in metric.get('tags', {}).items()])
+        #statsd.gauge(metric['metric'], metric['value'],["{}:{}".format(k, v) for k, v in metric.get('tags', {}).items()])
