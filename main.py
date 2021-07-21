@@ -18,5 +18,7 @@ statsd.service_check(
 list_metrics = ["metric1", "metric2"]
 
 for metric in fetch_metrics("localhost:16030"):
-    print("METRIC:" + str(metric['metric']) + ": " + str(metric['value']))
-   #statsd.gauge(metric['metric'], metric['value'],["{}:{}".format(k, v) for k, v in metric.get('tags', {}).items()])
+
+    if str(metric['metric']) == "hbase.jvmmetrics.MemHeapUsedM":
+        print("METRIC:" + str(metric['metric']) + ": " + str(metric['value']))
+        statsd.gauge(metric['metric'], metric['value'],["{}:{}".format(k, v) for k, v in metric.get('tags', {}).items()])
