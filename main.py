@@ -38,9 +38,9 @@ obj_hbase_metrics.service_check()
 obj_hbase_metrics.fetch_and_push_metrics(port)
 
 list_tables = list(config.items('tables'))
+list_tables = [i[0] for i in list_tables]
 print(list_tables)
 
-sys.exit()
 
 if master:
     bucket_name = config['s3_metrics']['bucket']
