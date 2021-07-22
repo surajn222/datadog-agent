@@ -69,32 +69,33 @@ def get_raw_region_metrics(prefix, bean):
 
 
 def get_metrics_from_bean(bean, aggregate_by_region):
-    #if bean['name'].startswith("Hadoop:service"):
-    hadoop_service, name, sub = parse_hadoop_bean_name(bean['name'])
-    prefix = ".".join([s.lower() for s in [hadoop_service, name, sub] if s is not None])
-    if name == "RegionServer" and sub == "Regions":
-        if aggregate_by_region:
-            # then we want all metrics tagged by region as HBase gives them to us
-            for metric in get_raw_region_metrics(prefix, bean):
-                yield metric
-        else:
-            # then we want to exclude the region tag from all region metrics, meaning we need to aggregate
-            # by table across regions
-            for metric in get_aggregate_region_metrics(prefix, bean):
-                yield metric
+    print("Getting metric from bean")
+    if bean['name'].startswith("Hadoop:service"):
+        hadoop_service, name, sub = parse_hadoop_bean_name(bean['name'])
+        prefix = ".".join([s.lower() for s in [hadoop_service, name, sub] if s is not None])
+        if name == "RegionServer" and sub == "Regions":
+            if aggregate_by_region:
+                # then we want all metrics tagged by region as HBase gives them to us
+                for metric in get_raw_region_metrics(prefix, bean):
+                    yield metric
+            else:
+                # then we want to exclude the region tag from all region metrics, meaning we need to aggregate
+                # by table across regions
+                for metric in get_aggregate_region_metrics(prefix, bean):
+                    yield metric
 
-    else:
-        for key, value in bean.items():
-            if isinstance(value, int) or isinstance(value, float) or isinstance(value, str):
-                yield gauge("{}.{}".format(prefix, key), value)
-            elif key == 'tag.isActiveMaster':
-                yield gauge("{}.alive".format(prefix, key), 1, tags={
-                    "isActiveMaster": 'true' if value in {'True', 'true', True} else 'false'
-                })
+        else:
+            for key, value in bean.items():
+                if isinstance(value, int) or isinstance(value, float) or isinstance(value, str):
+                    yield gauge("{}.{}".format(prefix, key), value)
+                elif key == 'tag.isActiveMaster':
+                    yield gauge("{}.alive".format(prefix, key), 1, tags={
+                        "isActiveMaster": 'true' if value in {'True', 'true', True} else 'false'
+                    })
 
 def fetch_metrics(hbase_jmx_json_url, aggregate_by_region=False):
     http=urllib3.PoolManager()
-    response=http.request("GET","http://localhost:16030/jmx")
+    response=http.request("GET","http://localhost:16010/jmx")
     data = json.loads(response.data.decode('utf-8'))
     for bean in data['beans']:
         for metric in get_metrics_from_bean(bean, aggregate_by_region):
