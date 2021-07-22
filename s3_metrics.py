@@ -4,7 +4,7 @@ import time
 
 class s3_metrics:
     def __init__(self):
-        options = {
+        self.options = {
             'statsd_host':'127.0.0.1',
             'statsd_port':8125
         }
