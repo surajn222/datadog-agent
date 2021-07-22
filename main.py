@@ -45,7 +45,7 @@ if master:
     print("Pushing S3 Metrics: " + "Bucket name: " + bucket_name + " Prefix: " +  prefix + "Tag: " + tag)
 
     try:
-        obj_s3_metrics = s3_metrics
+        obj_s3_metrics = s3_metrics()
         obj_s3_metrics.service_check()
         obj_s3_metrics.connect()
         obj_s3_metrics.fetch_and_push_metrics(bucket_name, prefix, tag)
