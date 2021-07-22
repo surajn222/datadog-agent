@@ -22,7 +22,7 @@ class hbase_metrics:
             'statsd_port':8125
         }
 
-    def initialize(self, options):
+    def initialize(self):
         print("Initializing")
         initialize(**self.options)
 
