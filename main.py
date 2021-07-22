@@ -35,6 +35,7 @@ print("Port: " + str(port))
 
 list_metrics = list(config.items('metrics'))
 list_metrics = [i[0] for i in list_metrics]
+print("Metrics")
 print(list_metrics)
 
 obj_hbase_metrics = hbase_metrics(list_metrics)
@@ -44,6 +45,7 @@ obj_hbase_metrics.fetch_and_push_metrics(port)
 
 list_tables = list(config.items('tables'))
 list_tables = [i[0] for i in list_tables]
+print("Tables")
 print(list_tables)
 
 
