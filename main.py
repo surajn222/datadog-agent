@@ -32,7 +32,12 @@ else:
     port = 16030
 
 print("Port: " + str(port))
-obj_hbase_metrics = hbase_metrics()
+
+list_metrics = list(config.items('metrics'))
+list_metrics = [i[0] for i in list_metrics]
+print(list_metrics)
+
+obj_hbase_metrics = hbase_metrics(list_metrics)
 obj_hbase_metrics.initialize()
 obj_hbase_metrics.service_check()
 obj_hbase_metrics.fetch_and_push_metrics(port)

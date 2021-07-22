@@ -3,23 +3,8 @@ import time
 from master_hbasemetrics import *
 
 class hbase_metrics:
-    def __init__(self):
-        self.list_metrics = ["hbase.master.server.numRegionServers",
-                            "hbase.master.server.numDeadRegionServers",
-                            "hbase.master.assignmentmanger.ritCount",
-                            "hbase.regionserver.server.readRequestCount",
-                            "hbase.regionserver.server.writeRequestCount",
-                            "hbase.jvmmetrics.GcTimeMillis",
-                            "hbase.jvmmetrics.MemHeapUsedM",
-                            "hbase.jvmmetrics.MemHeapMaxM",
-                            "hbase.regionserver.server.compactionQueueLength",
-                            "hbase.regionserver.ipc.numCallsInGeneralQueue",
-                            "hbase.regionserver.server.Get_95th_percentile",
-                            "hbase.regionserver.io.FsPReadTime_95th_percentile",
-                            "hbase.regionserver.io.FsWriteTime_95th_percentile",
-                            "hbase.regionserver.io.FsPReadTime_95th_percentile",
-                            "hbase.regionserver.io.FsWriteTime_95th_percentile"
-                             ]
+    def __init__(self, list_metrics):
+        self.list_metrics = list_metrics
 
         self.options = {
             'statsd_host':'127.0.0.1',
