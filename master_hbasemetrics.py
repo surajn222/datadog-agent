@@ -34,6 +34,7 @@ def aggregate_region_metric_values(metric, values):
         return int(sum(values)) / int(len(values))
     elif re.match("(\w+)(Count|_num_ops|Size)", metric):
         print("Values: " + str(values))
+        values = [int(i) for i in values]
         return sum(values)
     elif metric not in ignored_region_metrics:
         logger.warn("WARN: can't aggregate metric: {}".format(metric))
