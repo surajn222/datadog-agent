@@ -31,6 +31,7 @@ if master:
 else:
     port = 16030
 
+print("Port: " + str(port))
 obj_hbase_metrics = hbase_metrics()
 obj_hbase_metrics.initialize()
 obj_hbase_metrics.service_check()
