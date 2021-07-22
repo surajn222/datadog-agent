@@ -37,6 +37,11 @@ obj_hbase_metrics.initialize()
 obj_hbase_metrics.service_check()
 obj_hbase_metrics.fetch_and_push_metrics(port)
 
+list_tables = list(config.items('tables'))
+print(list_tables)
+
+sys.exit()
+
 if master:
     bucket_name = config['s3_metrics']['bucket']
     prefix = config['s3_metrics']['prefix']
