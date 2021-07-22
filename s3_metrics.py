@@ -10,6 +10,7 @@ class s3_metrics:
         }
 
     def init(self):
+        print("Initializing")
         initialize(**self.options)
 
     def service_check(self):
