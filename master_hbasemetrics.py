@@ -94,9 +94,9 @@ def get_metrics_from_bean(bean, aggregate_by_region):
                         "isActiveMaster": 'true' if value in {'True', 'true', True} else 'false'
                     })
 
-def fetch_metrics(hbase_jmx_json_url, aggregate_by_region=False):
+def fetch_metrics(hbase_jmx_json_url,  aggregate_by_region=False):
     http=urllib3.PoolManager()
-    response=http.request("GET","http://localhost:16010/jmx")
+    response=http.request("GET",hbase_jmx_json_url + "/jmx")
     data = json.loads(response.data.decode('utf-8'))
     for bean in data['beans']:
         for metric in get_metrics_from_bean(bean, aggregate_by_region):
