@@ -4,7 +4,7 @@ from master_hbasemetrics import *
 
 class hbase_metrics:
     def __init__(self):
-        list_metrics = ["hbase.master.server.numRegionServers",
+        self.list_metrics = ["hbase.master.server.numRegionServers",
                         "hbase.master.server.numDeadRegionServers",
                         "hbase.regionserver.server.readRequestCount",
                         "hbase.regionserver.server.writeRequestCount",
@@ -17,7 +17,7 @@ class hbase_metrics:
                         "hbase.regionserver.io.FsPReadTime_95th_percentile",
                         "hbase.regionserver.io.FsWriteTime_95th_percentile"]
 
-        options = {
+        self.options = {
             'statsd_host':'127.0.0.1',
             'statsd_port':8125
         }
