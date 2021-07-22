@@ -9,7 +9,7 @@ class s3_metrics:
             'statsd_port':8125
         }
 
-    def initialzie(self):
+    def initialize(self):
         initialize(**self.options)
 
     def service_check(self):
