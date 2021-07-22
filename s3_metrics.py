@@ -9,7 +9,6 @@ class s3_metrics:
             'statsd_port':8125
         }
 
-    def init(self):
         print("Initializing")
         initialize(**self.options)
 
