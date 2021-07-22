@@ -29,7 +29,7 @@ else:
 if master:
     port = 16010
 else:
-    port = 16020
+    port = 16030
 
 print("Port: " + str(port))
 obj_hbase_metrics = hbase_metrics()
