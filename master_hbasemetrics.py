@@ -70,7 +70,6 @@ def get_raw_region_metrics(prefix, bean):
 
 
 def get_metrics_from_bean(bean, aggregate_by_region):
-    print("Getting metric from bean")
     if bean['name'].startswith("Hadoop:service"):
         hadoop_service, name, sub = parse_hadoop_bean_name(bean['name'])
         prefix = ".".join([s.lower() for s in [hadoop_service, name, sub] if s is not None])

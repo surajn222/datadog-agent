@@ -37,17 +37,21 @@ obj_hbase_metrics.initialize()
 obj_hbase_metrics.service_check()
 obj_hbase_metrics.fetch_and_push_metrics(port)
 
-sys.exit()
+if master:
+    bucket_name = config['s3_metrics']['bucket']
+    prefix = config['s3_metrics']['prefix']
+    tag = config['s3_metrics']['tag']
 
-bucket_name = config['s3_metrics']['bucket']
-prefix = config['s3_metrics']['prefix']
-tag = config['s3_metrics']['tag']
+    print("Pushing S3 Metrics: " + "Bucket name: " + bucket_name + " Prefix: " +  prefix + "Tag: " + tag)
 
-obj_s3_metrics = s3_metrics
-obj_s3_metrics.initialize()
-obj_s3_metrics.service_check()
-obj_s3_metrics.connect()
-obj_s3_metrics.fetch_and_push_metrics(bucket_name, prefix, tag)
+    try:
+        obj_s3_metrics = s3_metrics
+        obj_s3_metrics.initialize()
+        obj_s3_metrics.service_check()
+        obj_s3_metrics.connect()
+        obj_s3_metrics.fetch_and_push_metrics(bucket_name, prefix, tag)
+    except Exception as e:
+        print(str(e))
 
 
 #
