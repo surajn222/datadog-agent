@@ -49,12 +49,11 @@ if master:
 
     print("Pushing S3 Metrics: " + "Bucket name: " + bucket_name + " Prefix: " +  prefix + "Tag: " + tag)
 
-    table = ["magazine"]
     try:
         obj_s3_metrics = s3_metrics()
         obj_s3_metrics.service_check()
         obj_s3_metrics.connect()
-        obj_s3_metrics.fetch_and_push_metrics(bucket_name, prefix, tag, table)
+        obj_s3_metrics.fetch_and_push_metrics(bucket_name, prefix, tag, list_tables)
     except Exception as e:
         print(str(e))
 
