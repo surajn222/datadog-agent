@@ -8,27 +8,31 @@ import sys
 import configparser
 import json
 
-
 config = configparser.ConfigParser()
 config.read('config.ini')
 
 #check if server is master or slave
 f = open("/mnt/var/lib/info/instance.json", "r")
+#f = open("instance.json", "r")
 str_instance_details = f.read()
 
-# parse x:
 json_instance_details = json.loads(str_instance_details)
-
-# the result is a Python dictionary:
-str_is_master = json_instance_details(["isMaster"])
+str_is_master = json_instance_details["isMaster"]
 
 print(str_is_master)
-sys.exit()
+
+if str_is_master==True:
+    master = True
+
+if master:
+    port = 16010
+else:
+    port = 16030
 
 obj_hbase_metrics = hbase_metrics()
 obj_hbase_metrics.initialize()
 obj_hbase_metrics.service_check()
-obj_hbase_metrics.fetch_and_push_metrics()
+obj_hbase_metrics.fetch_and_push_metrics(port)
 
 sys.exit()
 
