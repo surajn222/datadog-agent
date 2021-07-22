@@ -35,6 +35,6 @@ class s3_metrics:
                for obj in page['Contents']:
                  size+=obj['Size']
                  count+=1
-            print("Pushing metric: " + i + " Size:" + size + " Count:" + count)
+            print("Pushing metric: " + str(i) + " Size:" + str(size) + " Count:" + str(count))
             statsd.gauge('aws_s3.tablesize',size,tags=[tag,"table:"+i])
             statsd.gauge('aws_s3.num_of_objects_in_table',count,tags=[tag,"table:"+i])
