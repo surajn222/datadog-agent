@@ -40,7 +40,7 @@ class hbase_metrics:
 
     def fetch_and_push_metrics(self, port):
         print("Pushing Metrics")
-        for metric in fetch_metrics("localhost:" + str(port)):
+        for metric in fetch_metrics("http://localhost:" + str(port)):
             if str(metric['metric']) in self.list_metrics:
                 print("Pushing METRIC:" + str(metric['metric']) + ": " + str(metric['value']))
                 statsd.gauge(metric['metric'], metric['value'],["{}:{}".format(k, v) for k, v in metric.get('tags', {}).items()])
