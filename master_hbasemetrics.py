@@ -31,8 +31,9 @@ def parse_hadoop_bean_name(hadoop_bean_name):
 
 def aggregate_region_metric_values(metric, values):
     if re.match("(\w+)_(percentile|mean|median|max|min|99)", metric):
-        return sum(values) / len(values)
+        return int(sum(values)) / int(len(values))
     elif re.match("(\w+)(Count|_num_ops|Size)", metric):
+        print("Values: " + str(values))
         return sum(values)
     elif metric not in ignored_region_metrics:
         logger.warn("WARN: can't aggregate metric: {}".format(metric))
