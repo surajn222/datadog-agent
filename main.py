@@ -8,7 +8,7 @@ import sys
 import configparser
 import json
 
-config = configparser.ConfigParser()
+config = configparser.ConfigParser(allow_no_value=True)
 config.read('config.ini')
 
 #check if server is master or slave
