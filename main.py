@@ -23,6 +23,8 @@ print(str_is_master)
 
 if str_is_master==True:
     master = True
+else:
+    master = False
 
 if master:
     port = 16010
