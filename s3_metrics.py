@@ -23,7 +23,7 @@ class s3_metrics:
         self.s3 = boto3.client('s3')
 
     def fetch_and_push_metrics(self, bucket_name, prefix, tag):
-        table=["sampletable1","sampletable2","sampletable3","usertable1","usertable2","usertable3","usertable4","user_preference"]
+        table=["magazine"]
         size=0
         count=0
         paginator = self.s3.get_paginator('list_objects_v2')
