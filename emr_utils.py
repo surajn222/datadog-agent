@@ -21,3 +21,7 @@ def get_local_ip():
     print("Your Computer Name is:" + hostname)
     print("Your Computer IP Address is:" + IPAddr)
     return IPAddr
+
+def create_file(file_name):
+    f = open(file_name,"w")
+    f.close()

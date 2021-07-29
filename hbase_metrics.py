@@ -23,6 +23,18 @@ class hbase_metrics:
             message="Application is OK",
         )
 
+
+    def fetch_and_append_metrics(self, hostname, file_name):
+        print("Printing Metrics to file")
+
+        for metric in fetch_metrics("http://" + str(hostname)):
+            print("Printing METRIC:" + str(metric['metric']) + ": " + str(metric['value']))
+            f = open(file_name, "a")
+            f.write(str(metric['metric']))
+            f.close()
+
+
+
     def fetch_and_push_metrics(self, hostname):
         print("Pushing Metrics")
 

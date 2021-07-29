@@ -31,6 +31,8 @@ list_hostnames = [i[0] for i in list_hostnames]
 print("Hostnames:")
 print(list_hostnames)
 
+file_name = "list_of_metrics"
+create_file(file_name)
 
 for hostname in list_hostnames:
     if "/" in hostname:
@@ -45,6 +47,7 @@ for hostname in list_hostnames:
     obj_hbase_metrics = hbase_metrics(list_metrics)
     obj_hbase_metrics.initialize()
     obj_hbase_metrics.service_check()
+    obj_hbase_metrics.fetch_and_append_metrics(hostname, file_name)
     obj_hbase_metrics.fetch_and_push_metrics(hostname)
 
 
