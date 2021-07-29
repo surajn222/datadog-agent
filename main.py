@@ -8,7 +8,7 @@ import sys
 import configparser
 from emr_utils import *
 
-config = configparser.ConfigParser(allow_no_value=True)
+config = configparser.ConfigParser(allow_no_value=True, delimiters=('='))
 config.read('config.ini')
 
 str_is_master = identify_master_node()
