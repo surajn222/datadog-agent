@@ -16,11 +16,6 @@ str_local_ip = get_local_ip()
 
 print("Node is master node: " + str(str_is_master))
 
-if str_is_master==True:
-    master = True
-else:
-    master = False
-
 list_metrics = list(config.items('metrics'))
 list_metrics = [i[0] for i in list_metrics]
 print("Metrics: ")
@@ -36,7 +31,7 @@ create_file(file_name)
 
 for hostname in list_hostnames:
     if "/" in hostname:
-        if master:
+        if str_is_master:
             hostname = hostname.split(":")[0] + str(":16010")
         else:
             hostname = hostname.split(":")[0] + str(":16030")
