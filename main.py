@@ -26,6 +26,8 @@ print(list_metrics)
 
 list_hostnames = list(config.items('jmx_hostnames'))
 list_hostnames = [i[0] for i in list_hostnames]
+print("Hostnames:")
+print(list_hostnames)
 
 for hostname in list_hostnames:
     if "/" in hostname:
@@ -33,6 +35,7 @@ for hostname in list_hostnames:
             hostname = hostname.split(":")[0] + str(":16010")
         else:
             hostname = hostname.split(":")[0] + str(":16030")
+    print(hostname)
     obj_hbase_metrics = hbase_metrics(list_metrics)
     obj_hbase_metrics.initialize()
     obj_hbase_metrics.service_check()
