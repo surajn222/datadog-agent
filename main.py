@@ -7,7 +7,6 @@ from s3_metrics import *
 import sys
 import configparser
 from emr_utils import *
-import netifaces as ni
 
 config = configparser.ConfigParser(allow_no_value=True, delimiters=('='))
 config.read('config.ini')
