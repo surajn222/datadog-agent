@@ -6,43 +6,40 @@ from hbase_metrics import *
 from s3_metrics import *
 import sys
 import configparser
-import json
+from emr_utils import *
 
 config = configparser.ConfigParser(allow_no_value=True)
 config.read('config.ini')
 
-#check if server is master or slave
-f = open("/mnt/var/lib/info/instance.json", "r")
-#f = open("instance.json", "r")
-str_instance_details = f.read()
-
-json_instance_details = json.loads(str_instance_details)
-str_is_master = json_instance_details["isMaster"]
-
-print(str_is_master)
+str_is_master = identify_master_node()
+print("Node is master node: " + str_is_master)
 
 if str_is_master==True:
     master = True
 else:
     master = False
 
-if master:
-    port = 16010
-else:
-    port = 16030
-
-print("Port: " + str(port))
-
 list_metrics = list(config.items('metrics'))
 list_metrics = [i[0] for i in list_metrics]
-print("Metrics")
+print("Metrics: ")
 print(list_metrics)
 
-obj_hbase_metrics = hbase_metrics(list_metrics)
-obj_hbase_metrics.initialize()
-obj_hbase_metrics.service_check()
-obj_hbase_metrics.fetch_and_push_metrics(port)
+list_hostnames = list(config.items('jmx_hostnames'))
+list_hostnames = [i[0] for i in list_hostnames]
 
+for hostname in list_hostnames:
+    if "/" in hostname:
+        if master:
+            hostname = hostname.split(":")[0] + str(":16010")
+        else:
+            hostname = hostname.split(":")[0] + str(":16030")
+    obj_hbase_metrics = hbase_metrics(list_metrics)
+    obj_hbase_metrics.initialize()
+    obj_hbase_metrics.service_check()
+    obj_hbase_metrics.fetch_and_push_metrics(hostname)
+
+
+#S3 metrics
 list_tables = list(config.items('tables'))
 list_tables = [i[0] for i in list_tables]
 print("Tables")
@@ -63,6 +60,10 @@ if master:
         obj_s3_metrics.fetch_and_push_metrics(bucket_name, prefix, tag, list_tables)
     except Exception as e:
         print(str(e))
+
+
+
+
 
 
 #

@@ -23,9 +23,10 @@ class hbase_metrics:
             message="Application is OK",
         )
 
-    def fetch_and_push_metrics(self, port):
+    def fetch_and_push_metrics(self, hostname):
         print("Pushing Metrics")
-        for metric in fetch_metrics("http://localhost:" + str(port)):
+
+        for metric in fetch_metrics("http://" + str(hostname)):
             if str(metric['metric']).lower() in self.list_metrics:
                 print("Pushing METRIC:" + str(metric['metric']) + ": " + str(metric['value']))
                 statsd.gauge(metric['metric'], metric['value'],["{}:{}".format(k, v) for k, v in metric.get('tags', {}).items()])
