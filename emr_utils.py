@@ -1,6 +1,8 @@
 import os
 import sys
 import json
+import socket
+
 
 def identify_master_node():
     #check if server is master or slave
@@ -10,3 +12,12 @@ def identify_master_node():
     json_instance_details = json.loads(str_instance_details)
     str_is_master = json_instance_details["isMaster"]
     return str_is_master
+
+
+
+def get_local_ip():
+    hostname = socket.gethostname()
+    IPAddr = socket.gethostbyname(hostname)
+    print("Your Computer Name is:" + hostname)
+    print("Your Computer IP Address is:" + IPAddr)
+    return IPAddr

@@ -13,6 +13,8 @@ config = configparser.ConfigParser(allow_no_value=True, delimiters=('='))
 config.read('config.ini')
 
 str_is_master = identify_master_node()
+str_local_ip = get_local_ip()
+
 print("Node is master node: " + str(str_is_master))
 
 if str_is_master==True:
@@ -30,6 +32,7 @@ list_hostnames = [i[0] for i in list_hostnames]
 print("Hostnames:")
 print(list_hostnames)
 
+
 for hostname in list_hostnames:
     if "/" in hostname:
         if master:
@@ -37,11 +40,8 @@ for hostname in list_hostnames:
         else:
             hostname = hostname.split(":")[0] + str(":16030")
 
-
-    ni.ifaddresses('eth0')
-    ip = ni.ifaddresses('eth0')[ni.AF_INET][0]['addr']
-    hostname = ip + hostname.split(":")[1]
-    print(hostname)
+    hostname = str_local_ip + hostname.split(":")[1]
+    print("Hostname to be passed" + hostname)
 
     obj_hbase_metrics = hbase_metrics(list_metrics)
     obj_hbase_metrics.initialize()
