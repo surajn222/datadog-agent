@@ -30,7 +30,7 @@ class hbase_metrics:
         for metric in fetch_metrics("http://" + str(hostname)):
             print("Printing METRIC:" + str(metric['metric']) + ": " + str(metric['value']))
             f = open(file_name, "a")
-            f.write(str(metric['metric']))
+            f.write(str(metric['metric']) + "\n")
             f.close()
 
 
