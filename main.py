@@ -39,7 +39,7 @@ for hostname in list_hostnames:
         else:
             hostname = hostname.split(":")[0] + str(":16030")
 
-    hostname = str_local_ip + hostname.split(":")[1]
+    hostname = str_local_ip + ":" + hostname.split(":")[1]
     print("Hostname to be passed: " + hostname)
 
     obj_hbase_metrics = hbase_metrics(list_metrics)
