@@ -12,7 +12,7 @@ config = configparser.ConfigParser(allow_no_value=True, delimiters=('='))
 config.read('config.ini')
 
 str_is_master = identify_master_node()
-print("Node is master node: " + str_is_master)
+print("Node is master node: " + str(str_is_master))
 
 if str_is_master==True:
     master = True
