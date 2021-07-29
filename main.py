@@ -11,11 +11,6 @@ from emr_utils import *
 config = configparser.ConfigParser(allow_no_value=True, delimiters=('='))
 config.read('config.ini')
 
-str_is_master = identify_master_node()
-str_local_ip = get_local_ip()
-
-print("Node is master node: " + str(str_is_master))
-
 list_metrics = list(config.items('metrics'))
 list_metrics = [i[0] for i in list_metrics]
 print("Metrics: ")
@@ -25,6 +20,13 @@ list_hostnames = list(config.items('jmx_hostnames'))
 list_hostnames = [i[0] for i in list_hostnames]
 print("Hostnames:")
 print(list_hostnames)
+
+
+str_is_master = identify_master_node()
+str_local_ip = get_local_ip()
+
+print("Node is master node: " + str(str_is_master))
+print("Local IP: " + str(str_local_ip))
 
 file_name = "list_of_metrics"
 create_file(file_name)
