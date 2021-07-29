@@ -7,6 +7,7 @@ from s3_metrics import *
 import sys
 import configparser
 from emr_utils import *
+import netifaces as ni
 
 config = configparser.ConfigParser(allow_no_value=True, delimiters=('='))
 config.read('config.ini')
@@ -35,7 +36,13 @@ for hostname in list_hostnames:
             hostname = hostname.split(":")[0] + str(":16010")
         else:
             hostname = hostname.split(":")[0] + str(":16030")
+
+
+    ni.ifaddresses('eth0')
+    ip = ni.ifaddresses('eth0')[ni.AF_INET][0]['addr']
+    hostname = ip + hostname.split(":")[1]
     print(hostname)
+
     obj_hbase_metrics = hbase_metrics(list_metrics)
     obj_hbase_metrics.initialize()
     obj_hbase_metrics.service_check()
